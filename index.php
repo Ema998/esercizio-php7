@@ -1,23 +1,20 @@
 <?php
-$message1 = "Inserisci la password: ";
-$message2 = "Riprova.";
-$password = readline(prompt: "$message1\n");
-$containsNumber = false;
-$containsLowercase = false;
-$containsSpecial = false;
+$password = readline("Inserire password");
 
 //check password
 function checkPassword($password){; 
     $errors = [];
 
     //password almeno 8 caratteri
-    if(strlen($password) > 8) {
+    if(strlen($password) >= 8) {
         echo "La password è lunga abbastanza.\n";
     }else{
         $errors[] = "La password è troppo corta.\n";
     };
     
     //contenere almeno un numero
+    
+    $containsNumber = false;
     for($i = 0; $i < strlen($password); $i++) {
         if(is_numeric($password[$i])) {
            $containsNumber = true;
@@ -31,9 +28,10 @@ function checkPassword($password){;
     }
 
     //contenere almeno una maiuscola
-    for($i = 0; $i < strlen($password); $i++) {
-        if(ctype_lower($password[$i])) {
-            $containsLowercase = true;
+    $containsUppercase = false;
+    for($i = 0; $i <= strlen($password); $i++) {
+        if(ctype_upper($password[$i])) {
+            $containsUppercase = true;
             break;
         };
     };
@@ -44,7 +42,8 @@ function checkPassword($password){;
     }
     
     //contenere almeno un carattere speciale
-    for($i = 0; $i < strlen($password); $i++) {
+    $containsSpecial = false;
+    for($i = 0; $i <= strlen($password); $i++) {
         if(!ctype_alnum($password[$i])) {
             $containsSpecial = true;
             break;
@@ -60,6 +59,7 @@ function checkPassword($password){;
 }
 
 //risultato
+$password
 $errors = checkPassword($password);
 
 if(empty($errors)){
@@ -69,10 +69,9 @@ if(empty($errors)){
     foreach($errors as $error) {
         echo $error;
     };
-    
-    $password = readline(prompt: "$message2\n");
+    $password = readline(`Riprova`);
+    checkPassword($password);
     $errors = checkPassword($password);
 };
-
 
 ?>
