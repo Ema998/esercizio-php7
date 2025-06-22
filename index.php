@@ -29,9 +29,16 @@ function checkPassword($password){;
 
     //contenere almeno una maiuscola
     $containsUppercase = false;
-    for($i = 0; $i <= strlen($password); $i++) {
+    $containsLowerCase = false;
+    for($i = 0; $i < strlen($password); $i++) {
         if(ctype_upper($password[$i])) {
             $containsUppercase = true;
+            break;
+        };
+    };
+    for($i = 0; $i < strlen($password); $i++) {
+        if(ctype_lower($password[$i])) {
+            $containsLowercase = true;
             break;
         };
     };
@@ -59,19 +66,16 @@ function checkPassword($password){;
 }
 
 //risultato
-$password
-$errors = checkPassword($password);
-
-if(empty($errors)){
-    echo "Password corretta.\n";
-}else{
-    echo "Password non corretta.\n";
-    foreach($errors as $error) {
-        echo $error;
-    };
-    $password = readline(`Riprova`);
-    checkPassword($password);
+do {
+    $password = readline("Inserire password: ");
     $errors = checkPassword($password);
-};
+
+    if (!empty($errors)) {
+        echo "Password non corretta:\n";
+        foreach($errors as $error) {
+            echo $error;
+        }
+    }
+} while (!empty($errors));
 
 ?>
